@@ -1,22 +1,37 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DashboardCards from "@/components/DashboardCards";
 import SearchBox from "@/components/SearchBox";
 import TaskFilters from "@/components/TaskFilters";
 import TaskForm from "@/components/TaskForm";
 import TaskList from "@/components/TaskList";
-import { mockTasks } from "@/data/mockTasks";
 import { filterTasks } from "@/lib/taskUtils";
+import { loadTasksFromStorage, saveTasksToStorage } from "@/lib/storage";
 import { Task, TaskPriority, TaskStatus } from "@/types/task";
 
 export default function Home() {
-  const [tasks, setTasks] = useState<Task[]>(mockTasks);
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [isLoaded, setIsLoaded] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState<TaskStatus | "all">("all");
   const [priorityFilter, setPriorityFilter] = useState<TaskPriority | "all">(
     "all"
   );
+
+  useEffect(() => {
+    const storedTasks = loadTasksFromStorage();
+    
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setTasks(storedTasks);
+    setIsLoaded(true);
+  }, []);
+
+  useEffect(() => {
+    if (isLoaded) {
+      saveTasksToStorage(tasks);
+    }
+  }, [tasks, isLoaded]);
 
   function handleAddTask(newTask: Task) {
     setTasks((currentTasks) => [newTask, ...currentTasks]);
