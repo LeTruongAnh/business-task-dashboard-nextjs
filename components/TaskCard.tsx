@@ -1,12 +1,28 @@
 import { isOverdue } from "@/lib/taskUtils";
-import { Task } from "@/types/task";
+import { Task, TaskStatus } from "@/types/task";
 
 interface TaskCardProps {
   task: Task;
+  onUpdateStatus: (taskId: string, nextStatus: TaskStatus) => void;
 }
 
-export default function TaskCard({ task }: TaskCardProps) {
+function getNextStatus(status: TaskStatus): TaskStatus {
+  if (status === "todo") return "in_progress";
+  if (status === "in_progress") return "done";
+  if (status === "blocked") return "in_progress";
+  return "done";
+}
+
+function getStatusButtonLabel(status: TaskStatus): string {
+  if (status === "todo") return "Start Task";
+  if (status === "in_progress") return "Mark as Done";
+  if (status === "blocked") return "Unblock Task";
+  return "Completed";
+}
+
+export default function TaskCard({ task, onUpdateStatus }: TaskCardProps) {
   const overdue = isOverdue(task.deadline, task.status);
+  const isDone = task.status === "done";
 
   return (
     <article className="rounded-xl bg-white p-4 shadow">
@@ -39,6 +55,15 @@ export default function TaskCard({ task }: TaskCardProps) {
           <span className="font-medium">Deadline:</span> {task.deadline}
         </p>
       </div>
+
+      <button
+        type="button"
+        disabled={isDone}
+        onClick={() => onUpdateStatus(task.id, getNextStatus(task.status))}
+        className="mt-4 rounded-lg bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-gray-800 disabled:cursor-not-allowed disabled:bg-gray-300"
+      >
+        {getStatusButtonLabel(task.status)}
+      </button>
     </article>
   );
 }

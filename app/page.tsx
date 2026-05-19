@@ -22,6 +22,14 @@ export default function Home() {
     setTasks((currentTasks) => [newTask, ...currentTasks]);
   }
 
+  function handleUpdateStatus(taskId: string, nextStatus: TaskStatus) {
+    setTasks((currentTasks) =>
+      currentTasks.map((task) =>
+        task.id === taskId ? { ...task, status: nextStatus } : task
+      )
+    );
+  }
+
   const visibleTasks = filterTasks(
     tasks,
     statusFilter,
@@ -57,7 +65,10 @@ export default function Home() {
           />
         </div>
 
-        <TaskList tasks={visibleTasks} />
+        <TaskList
+          tasks={visibleTasks}
+          onUpdateStatus={handleUpdateStatus}
+        />
       </div>
     </main>
   );
