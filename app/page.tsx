@@ -1,16 +1,63 @@
+"use client";
+
+import { useState } from "react";
 import DashboardCards from "@/components/DashboardCards";
+import SearchBox from "@/components/SearchBox";
+import TaskFilters from "@/components/TaskFilters";
+import TaskForm from "@/components/TaskForm";
 import TaskList from "@/components/TaskList";
 import { mockTasks } from "@/data/mockTasks";
+import { filterTasks } from "@/lib/taskUtils";
+import { Task, TaskPriority, TaskStatus } from "@/types/task";
 
 export default function Home() {
+  const [tasks, setTasks] = useState<Task[]>(mockTasks);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState<TaskStatus | "all">("all");
+  const [priorityFilter, setPriorityFilter] = useState<TaskPriority | "all">(
+    "all"
+  );
+
+  function handleAddTask(newTask: Task) {
+    setTasks((currentTasks) => [newTask, ...currentTasks]);
+  }
+
+  const visibleTasks = filterTasks(
+    tasks,
+    statusFilter,
+    priorityFilter,
+    searchTerm
+  );
+
   return (
     <main className="min-h-screen bg-gray-100 p-6">
       <div className="mx-auto max-w-6xl space-y-6">
-        <h1 className="text-3xl font-bold">Business Task Dashboard</h1>
+        <div>
+          <h1 className="text-3xl font-bold">Business Task Dashboard</h1>
+          <p className="mt-2 text-gray-600">
+            Manage team tasks, priorities, deadlines, and overdue work.
+          </p>
+        </div>
 
-        <DashboardCards tasks={mockTasks} />
+        <DashboardCards tasks={tasks} />
 
-        <TaskList tasks={mockTasks} />
+        <TaskForm onAddTask={handleAddTask} />
+
+        <div className="grid gap-4 md:grid-cols-2">
+          <SearchBox
+            searchTerm={searchTerm}
+            onSearchChange={setSearchTerm}
+          />
+
+          <TaskFilters
+            statusFilter={statusFilter}
+            priorityFilter={priorityFilter}
+            onStatusChange={setStatusFilter}
+            onPriorityChange={setPriorityFilter}
+          />
+        </div>
+
+        <TaskList tasks={visibleTasks} />
       </div>
     </main>
   );
