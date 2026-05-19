@@ -1,36 +1,89 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Business Task Dashboard
 
-## Getting Started
+A simple task management dashboard for business, sales, and IT teams to track task ownership, priorities, deadlines, and overdue work.
 
-First, run the development server:
+## Overview
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Business Task Dashboard is a frontend project built with Next.js, React, TypeScript, and Tailwind CSS.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The goal of this project is to practice core frontend development skills including component-based UI, state management, form handling, filtering, searching, TypeScript data modeling, business logic, localStorage persistence, GitHub workflow, and deployment.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Business Problem
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Small teams often manage tasks manually in spreadsheets. This makes it difficult to track:
 
-## Learn More
+- Who owns each task
+- Which tasks are high priority
+- Which tasks are overdue
+- Which work has been completed
+- Which tasks need immediate attention
 
-To learn more about Next.js, take a look at the following resources:
+## Solution
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+This app provides a clean task dashboard that allows users to create tasks, update task status, search by task title or assignee, filter by status and priority, and quickly identify overdue tasks.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Features
 
-## Deploy on Vercel
+- View all tasks in a dashboard
+- Add new task
+- Update task status
+- Search tasks by title or assignee
+- Filter tasks by status
+- Filter tasks by priority
+- View dashboard summary cards
+- Detect overdue tasks
+- Persist task data using localStorage
+- Responsive UI for desktop and mobile
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Tech Stack
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Next.js
+- React
+- TypeScript
+- Tailwind CSS
+- localStorage
+
+## Key Concepts Practiced
+
+- TypeScript interface and union types
+- React components
+- Props
+- useState
+- useEffect
+- Controlled form inputs
+- Event handling
+- Array map and filter
+- Conditional rendering
+- Business logic functions
+- localStorage persistence
+- Responsive UI with Tailwind CSS
+
+## Project Structure
+
+```txt
+business-task-dashboard-nextjs/
+  app/
+    layout.tsx
+    page.tsx
+    globals.css
+
+  components/
+    DashboardCards.tsx
+    EmptyState.tsx
+    SearchBox.tsx
+    TaskCard.tsx
+    TaskFilters.tsx
+    TaskForm.tsx
+    TaskList.tsx
+
+  data/
+    mockTasks.ts
+
+  lib/
+    storage.ts
+    taskUtils.ts
+
+  types/
+    task.ts
+
+  README.md
