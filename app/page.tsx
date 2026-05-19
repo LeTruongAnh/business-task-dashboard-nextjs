@@ -53,24 +53,29 @@ export default function Home() {
   );
 
   return (
-    <main className="min-h-screen bg-gray-100 p-6">
+    <main className="min-h-screen bg-gray-100 px-4 py-6 md:px-6 lg:px-8">
       <div className="mx-auto max-w-6xl space-y-6">
-        <div>
-          <h1 className="text-3xl font-bold">Business Task Dashboard</h1>
-          <p className="mt-2 text-gray-600">
-            Manage team tasks, priorities, deadlines, and overdue work.
+        <header className="rounded-2xl bg-white p-6 shadow-sm">
+          <p className="text-sm font-medium uppercase tracking-wide text-blue-600">
+            Team Operations
           </p>
-        </div>
+
+          <h1 className="mt-2 text-3xl font-bold text-gray-900">
+            Business Task Dashboard
+          </h1>
+
+          <p className="mt-2 max-w-2xl text-gray-600">
+            Manage team tasks, priorities, deadlines, and overdue work in one
+            simple dashboard.
+          </p>
+        </header>
 
         <DashboardCards tasks={tasks} />
 
         <TaskForm onAddTask={handleAddTask} />
 
-        <div className="grid gap-4 md:grid-cols-2">
-          <SearchBox
-            searchTerm={searchTerm}
-            onSearchChange={setSearchTerm}
-          />
+        <div className="grid gap-4 lg:grid-cols-2">
+          <SearchBox searchTerm={searchTerm} onSearchChange={setSearchTerm} />
 
           <TaskFilters
             statusFilter={statusFilter}
@@ -80,10 +85,7 @@ export default function Home() {
           />
         </div>
 
-        <TaskList
-          tasks={visibleTasks}
-          onUpdateStatus={handleUpdateStatus}
-        />
+        <TaskList tasks={visibleTasks} onUpdateStatus={handleUpdateStatus} />
       </div>
     </main>
   );
